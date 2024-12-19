@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { TodoItem } from '../TodoItem';
 import { Todo } from '../../types/Todo';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 type Props = {
   filteredTodos: Todo[];
@@ -21,26 +22,32 @@ export const TodoList: React.FC<Props> = ({
 
   return (
     <section className="todoapp__main" data-cy="TodoList">
-      {filteredTodos.map(todo => (
-        <TodoItem
-          key={todo.id}
-          todo={todo}
-          onRemoveTodo={onRemoveTodo}
-          onUpdateTodo={onUpdateTodo}
-          isLoading={loadingTodoIds.includes(todo.id)}
-          isInEditMode={editedTodoId === todo.id}
-          setEditedTodoId={setEditedTodoId}
-        />
-      ))}
-      {tempTodo && (
-        <TodoItem
-          todo={tempTodo}
-          isLoading
-          onRemoveTodo={onRemoveTodo}
-          onUpdateTodo={onUpdateTodo}
-          setEditedTodoId={setEditedTodoId}
-        />
-      )}
+      <TransitionGroup>
+        {filteredTodos.map(todo => (
+          <CSSTransition key={todo.id} timeout={300} classNames="item">
+            <TodoItem
+              key={todo.id}
+              todo={todo}
+              onRemoveTodo={onRemoveTodo}
+              onUpdateTodo={onUpdateTodo}
+              isLoading={loadingTodoIds.includes(todo.id)}
+              isInEditMode={editedTodoId === todo.id}
+              setEditedTodoId={setEditedTodoId}
+            />
+          </CSSTransition>
+        ))}
+        {tempTodo && (
+          <CSSTransition key={0} timeout={300} classNames="temp-item">
+            <TodoItem
+              todo={tempTodo}
+              isLoading
+              onRemoveTodo={onRemoveTodo}
+              onUpdateTodo={onUpdateTodo}
+              setEditedTodoId={setEditedTodoId}
+            />
+          </CSSTransition>
+        )}
+      </TransitionGroup>
     </section>
   );
 };
