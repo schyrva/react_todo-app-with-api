@@ -35,6 +35,8 @@ export const App: React.FC = () => {
     })();
   }, []);
 
+  const inputAddRef = useRef<HTMLInputElement>(null);
+
   const filteredTodos = useMemo(
     () =>
       todos.filter(todo => {
@@ -130,8 +132,6 @@ export const App: React.FC = () => {
       });
     }
   };
-
-  const inputAddRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="todoapp">
