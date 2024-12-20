@@ -7,16 +7,16 @@ type Props = {
   todo: Todo;
   isLoading?: boolean;
   isInEditMode?: boolean;
-  onRemoveTodo: (todoId: number) => Promise<void>;
-  onUpdateTodo: (todo: Todo) => Promise<void>;
+  handleRemoveTodo: (todoId: number) => Promise<void>;
+  handleUpdateTodo: (todo: Todo) => Promise<void>;
   setEditedTodoId: Dispatch<SetStateAction<null | number>>;
 };
 
 export const TodoItem: React.FC<Props> = ({
   todo,
   isLoading,
-  onRemoveTodo,
-  onUpdateTodo,
+  handleRemoveTodo,
+  handleUpdateTodo,
   isInEditMode,
   setEditedTodoId,
 }) => {
@@ -27,7 +27,7 @@ export const TodoItem: React.FC<Props> = ({
   const onCheckTodo = () => {
     const todoToUpdate = { ...todo, completed: !todo.completed };
 
-    onUpdateTodo(todoToUpdate);
+    handleUpdateTodo(todoToUpdate);
   };
 
   const onDoubleClick = () => {
@@ -49,7 +49,7 @@ export const TodoItem: React.FC<Props> = ({
 
     if (normalizedTitle === '') {
       try {
-        await onRemoveTodo(todo.id);
+        await handleRemoveTodo(todo.id);
         setEditedTodoId(null);
       } catch (err) {}
 
@@ -59,7 +59,7 @@ export const TodoItem: React.FC<Props> = ({
     }
 
     try {
-      await onUpdateTodo({ ...todo, title: normalizedTitle });
+      await handleUpdateTodo({ ...todo, title: normalizedTitle });
       setEditedTodoId(null);
     } catch (err) {
       inputRef?.current?.focus();
@@ -112,7 +112,7 @@ export const TodoItem: React.FC<Props> = ({
             type="button"
             className="todo__remove"
             data-cy="TodoDelete"
-            onClick={() => onRemoveTodo(todo.id)}
+            onClick={() => handleRemoveTodo(todo.id)}
           >
             ×
           </button>

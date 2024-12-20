@@ -66,7 +66,7 @@ export const App: React.FC = () => {
     [todos],
   );
 
-  const onAddTodo = async (todoTitle: string) => {
+  const handleAddTodo = async (todoTitle: string) => {
     setTempTodo({ id: 0, title: todoTitle, completed: false, userId: USER_ID });
     try {
       const newTodo = await addTodo({ title: todoTitle, completed: false });
@@ -81,7 +81,7 @@ export const App: React.FC = () => {
     }
   };
 
-  const onRemoveTodo = async (todoId: number) => {
+  const handleRemoveTodo = async (todoId: number) => {
     setLoadingTodoIds(prev => [...prev, todoId]);
     try {
       await deleteTodo(todoId);
@@ -95,7 +95,7 @@ export const App: React.FC = () => {
     }
   };
 
-  const onUpdateTodo = async (todoToUpdate: Todo) => {
+  const handleUpdateTodo = async (todoToUpdate: Todo) => {
     setLoadingTodoIds(prev => [...prev, todoToUpdate.id]);
     try {
       const updatedTodo = await updateTodo(todoToUpdate);
@@ -111,24 +111,24 @@ export const App: React.FC = () => {
     }
   };
 
-  const onClearCompleted = async () => {
+  const handleClearCompleted = async () => {
     const completedTodos = todos.filter(todo => todo.completed);
 
     completedTodos.forEach(todo => {
-      onRemoveTodo(todo.id);
+      handleRemoveTodo(todo.id);
     });
   };
 
-  const onToggleAll = async () => {
+  const handleToggleAll = async () => {
     if (todosActiveNum > 0) {
       const activeTodos = todos.filter(todo => !todo.completed);
 
       activeTodos.forEach(todo => {
-        onUpdateTodo({ ...todo, completed: true });
+        handleUpdateTodo({ ...todo, completed: true });
       });
     } else {
       todos.forEach(todo => {
-        onUpdateTodo({ ...todo, completed: false });
+        handleUpdateTodo({ ...todo, completed: false });
       });
     }
   };
@@ -139,21 +139,21 @@ export const App: React.FC = () => {
 
       <div className="todoapp__content">
         <TodoHeader
-          onAddTodo={onAddTodo}
+          handleAddTodo={handleAddTodo}
           setErrorMessage={setErrorMessage}
           isInputDisabled={!!tempTodo}
           inputRef={inputAddRef}
-          onToggleAll={onToggleAll}
+          handleToggleAll={handleToggleAll}
           areAllTodosCompleated={areAllTodosCompleated}
           todosLength={todos.length}
         />
 
-        {(todos.length > 0 || tempTodo) && (
+        {(!!todos.length || tempTodo) && (
           <>
             <TodoList
               filteredTodos={filteredTodos}
-              onRemoveTodo={onRemoveTodo}
-              onUpdateTodo={onUpdateTodo}
+              handleRemoveTodo={handleRemoveTodo}
+              handleUpdateTodo={handleUpdateTodo}
               loadingTodoIds={loadingTodoIds}
               tempTodo={tempTodo}
             />
@@ -162,7 +162,7 @@ export const App: React.FC = () => {
               setFilterStatus={setFilterStatus}
               todosLeft={todosActiveNum}
               todosCompleted={todosCompletedNum}
-              onClearCompleted={onClearCompleted}
+              handleClearCompleted={handleClearCompleted}
             />
           </>
         )}

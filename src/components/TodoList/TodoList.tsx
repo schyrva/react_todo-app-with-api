@@ -5,16 +5,16 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 type Props = {
   filteredTodos: Todo[];
-  onRemoveTodo: (todoId: number) => Promise<void>;
-  onUpdateTodo: (todo: Todo) => Promise<void>;
+  handleRemoveTodo: (todoId: number) => Promise<void>;
+  handleUpdateTodo: (todo: Todo) => Promise<void>;
   loadingTodoIds: number[];
   tempTodo: Todo | null;
 };
 
 export const TodoList: React.FC<Props> = ({
   filteredTodos,
-  onRemoveTodo,
-  onUpdateTodo,
+  handleRemoveTodo,
+  handleUpdateTodo,
   loadingTodoIds,
   tempTodo,
 }) => {
@@ -28,8 +28,8 @@ export const TodoList: React.FC<Props> = ({
             <TodoItem
               key={todo.id}
               todo={todo}
-              onRemoveTodo={onRemoveTodo}
-              onUpdateTodo={onUpdateTodo}
+              handleRemoveTodo={handleRemoveTodo}
+              handleUpdateTodo={handleUpdateTodo}
               isLoading={loadingTodoIds.includes(todo.id)}
               isInEditMode={editedTodoId === todo.id}
               setEditedTodoId={setEditedTodoId}
@@ -41,8 +41,8 @@ export const TodoList: React.FC<Props> = ({
             <TodoItem
               todo={tempTodo}
               isLoading
-              onRemoveTodo={onRemoveTodo}
-              onUpdateTodo={onUpdateTodo}
+              handleRemoveTodo={handleRemoveTodo}
+              handleUpdateTodo={handleUpdateTodo}
               setEditedTodoId={setEditedTodoId}
             />
           </CSSTransition>

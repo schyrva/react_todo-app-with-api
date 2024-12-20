@@ -8,7 +8,7 @@ type Props = {
   setFilterStatus: Dispatch<SetStateAction<FilterStatus>>;
   todosLeft: number;
   todosCompleted: number;
-  onClearCompleted: () => Promise<void>;
+  handleClearCompleted: () => Promise<void>;
 };
 
 export const TodoFooter: React.FC<Props> = ({
@@ -16,7 +16,7 @@ export const TodoFooter: React.FC<Props> = ({
   setFilterStatus,
   todosLeft,
   todosCompleted,
-  onClearCompleted,
+  handleClearCompleted,
 }) => {
   return (
     <footer className="todoapp__footer" data-cy="Footer">
@@ -44,7 +44,7 @@ export const TodoFooter: React.FC<Props> = ({
         type="button"
         className="todoapp__clear-completed"
         data-cy="ClearCompletedButton"
-        onClick={onClearCompleted}
+        onClick={handleClearCompleted}
         disabled={todosCompleted === 0}
       >
         Clear completed

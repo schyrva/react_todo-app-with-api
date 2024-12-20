@@ -3,27 +3,27 @@ import { ErrorType } from '../../types/ErrorType';
 import cn from 'classnames';
 
 type Props = {
-  onAddTodo: (value: string) => Promise<void>;
+  handleAddTodo: (value: string) => Promise<void>;
   setErrorMessage: Dispatch<SetStateAction<ErrorType>>;
   isInputDisabled: boolean;
   inputRef: React.RefObject<HTMLInputElement> | null;
-  onToggleAll: () => Promise<void>;
+  handleToggleAll: () => Promise<void>;
   areAllTodosCompleated: boolean;
   todosLength: number;
 };
 
 export const TodoHeader: React.FC<Props> = ({
-  onAddTodo,
+  handleAddTodo,
   setErrorMessage,
   isInputDisabled,
   inputRef,
-  onToggleAll,
+  handleToggleAll,
   areAllTodosCompleated,
   todosLength,
 }) => {
   const [inputValue, setInputValue] = useState('');
 
-  const onSubmit = async (event: React.FormEvent<HTMLElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault();
 
     const trimmedValue = inputValue.trim();
@@ -35,7 +35,7 @@ export const TodoHeader: React.FC<Props> = ({
     }
 
     try {
-      await onAddTodo(trimmedValue);
+      await handleAddTodo(trimmedValue);
       setInputValue('');
     } catch {}
   };
@@ -59,10 +59,10 @@ export const TodoHeader: React.FC<Props> = ({
             active: areAllTodosCompleated,
           })}
           data-cy="ToggleAllButton"
-          onClick={onToggleAll}
+          onClick={handleToggleAll}
         />
       )}
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit}>
         <input
           data-cy="NewTodoField"
           type="text"
