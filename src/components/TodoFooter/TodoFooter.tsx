@@ -28,7 +28,7 @@ export const TodoFooter: React.FC<Props> = ({
         {Object.values(FilterStatus).map(filter => (
           <a
             key={filter}
-            href={`#/${filter === FilterStatus.All ? '' : filter.toLowerCase()}`}
+            href={`#/${filter !== FilterStatus.All && filter.toLowerCase()}`}
             className={cn('filter__link', {
               selected: filterStatus === filter,
             })}
@@ -45,7 +45,7 @@ export const TodoFooter: React.FC<Props> = ({
         className="todoapp__clear-completed"
         data-cy="ClearCompletedButton"
         onClick={handleClearCompleted}
-        disabled={todosCompleted === 0}
+        disabled={!todosCompleted}
       >
         Clear completed
       </button>
