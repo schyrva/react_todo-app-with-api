@@ -9,16 +9,11 @@ import { TodoHeader } from './components/TodoHeader';
 import { TodoFooter } from './components/TodoFooter';
 import { ErrorNotification } from './components/ErrorNotification';
 import { Todo } from './types/Todo';
-import {
-  addTodo,
-  deleteTodo,
-  getTodos,
-  updateTodo,
-  USER_ID,
-} from './api/todos';
+import { addTodo, deleteTodo, getTodos, updateTodo } from './api/todos';
 import { ErrorType } from './types/ErrorType';
 import { FilterStatus } from './types/FilterStatus';
 import { TodoList } from './components/TodoList';
+import { USER_ID } from './constants/api';
 
 export const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -28,20 +23,6 @@ export const App: React.FC = () => {
   );
   const [tempTodo, setTempTodo] = useState<Todo | null>(null);
   const [loadingTodoIds, setLoadingTodoIds] = useState<number[]>([]);
-
-  useEffect(() => {
-    const getAllTodos = async () => {
-      try {
-        const data = await getTodos();
-
-        setTodos(data);
-      } catch (err) {
-        setErrorMessage(ErrorType.LoadTodos);
-      }
-    };
-
-    getAllTodos();
-  }, []);
 
   const inputAddRef = useRef<HTMLInputElement>(null);
 
@@ -152,6 +133,20 @@ export const App: React.FC = () => {
       );
     }
   }, [todos, todosActiveNum, handleUpdateTodo]);
+
+  useEffect(() => {
+    const getAllTodos = async () => {
+      try {
+        const data = await getTodos();
+
+        setTodos(data);
+      } catch (err) {
+        setErrorMessage(ErrorType.LoadTodos);
+      }
+    };
+
+    getAllTodos();
+  }, []);
 
   return (
     <div className="todoapp">

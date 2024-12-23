@@ -52,7 +52,7 @@ export const TodoHeader: React.FC<Props> = ({
 
   return (
     <header className="todoapp__header">
-      {todosLength !== 0 && (
+      {!!todosLength && (
         <button
           type="button"
           className={cn('todoapp__toggle-all', {
@@ -62,6 +62,7 @@ export const TodoHeader: React.FC<Props> = ({
           onClick={handleToggleAll}
         />
       )}
+
       <form onSubmit={handleSubmit}>
         <input
           data-cy="NewTodoField"

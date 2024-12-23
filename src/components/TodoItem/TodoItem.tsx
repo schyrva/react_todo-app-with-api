@@ -47,7 +47,7 @@ export const TodoItem: React.FC<Props> = ({
       return;
     }
 
-    if (normalizedTitle === '') {
+    if (!normalizedTitle.length) {
       try {
         await handleRemoveTodo(todo.id);
         setEditedTodoId(null);
@@ -84,6 +84,7 @@ export const TodoItem: React.FC<Props> = ({
           onChange={onCheckTodo}
         />
       </label>
+
       {isInEditMode ? (
         <form onSubmit={onBlur} onBlur={onBlur}>
           <input
@@ -108,6 +109,7 @@ export const TodoItem: React.FC<Props> = ({
           >
             {todo.title}
           </span>
+
           <button
             type="button"
             className="todo__remove"
